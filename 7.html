@@ -1,0 +1,695 @@
+ <!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>كابتن إنجليش - تعلم بالاستماع 🎧</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&family=Tajawal:wght@400;700&display=swap');
+    
+    body { 
+      font-family: 'Tajawal', 'Comic Neue', cursive;
+      overflow-x: hidden;
+    }
+    
+    /* Animated Background */
+    .bg-animate {
+      background: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background-size: 400% 400%;
+      animation: gradient 15s ease infinite;
+    }
+    
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .float { animation: float 3s ease-in-out infinite; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+    }
+    
+    /* Sound Waves Animation */
+    .sound-waves {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      height: 40px;
+    }
+    
+    .wave {
+      width: 6px;
+      background: linear-gradient(to top, #3b82f6, #8b5cf6);
+      border-radius: 3px;
+      animation: wave 1s ease-in-out infinite;
+    }
+    
+    .wave:nth-child(1) { animation-delay: 0s; height: 20%; }
+    .wave:nth-child(2) { animation-delay: 0.1s; height: 40%; }
+    .wave:nth-child(3) { animation-delay: 0.2s; height: 70%; }
+    .wave:nth-child(4) { animation-delay: 0.3s; height: 50%; }
+    .wave:nth-child(5) { animation-delay: 0.4s; height: 30%; }
+    
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.5); }
+      50% { transform: scaleY(1); }
+    }
+    
+    /* Speaking Animation */
+    .speaking-pulse {
+      animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+    }
+    
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+    }
+    
+    /* Speech Bubbles */
+    .bubble-left { 
+      background: linear-gradient(135deg, #fef08c, #fde047); 
+      position: relative;
+      border: 4px solid #fff;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+    .bubble-left:after { 
+      content: ''; 
+      position: absolute; 
+      bottom: -20px; 
+      right: 30px; 
+      border: 15px solid transparent; 
+      border-top-color: #fde047; 
+    }
+    
+    .bubble-right { 
+      background: linear-gradient(135deg, #bae6fd, #7dd3fc); 
+      position: relative;
+      border: 4px solid #fff;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    }
+    .bubble-right:after { 
+      content: ''; 
+      position: absolute; 
+      bottom: -20px; 
+      left: 30px; 
+      border: 15px solid transparent; 
+      border-top-color: #7dd3fc; 
+    }
+    
+    /* Rainbow Text */
+    .rainbow-text {
+      background: linear-gradient(to right, #ef4444, #f59e0b, #10b981, #3b82f6, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: rainbow 3s ease-in-out infinite;
+      background-size: 200% auto;
+    }
+    
+    @keyframes rainbow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* Audio Button */
+    .audio-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      transition: all 0.3s ease;
+    }
+    .audio-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+    }
+    
+    /* Word Card */
+    .word-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+    }
+    .word-card:hover {
+      transform: translateY(-10px) scale(1.02);
+    }
+    .word-card.speaking {
+      border-color: #3b82f6;
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.5);
+    }
+    
+    /* Character Hover */
+    .character-hover {
+      transition: all 0.3s ease;
+    }
+    .character-hover:hover {
+      transform: scale(1.1) rotate(3deg);
+    }
+    
+    /* Progress Bar */
+    .progress-fill {
+      background: linear-gradient(90deg, #f093fb 0%, #f5576c 100%);
+      transition: width 0.5s ease;
+    }
+    
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body class="bg-animate min-h-screen text-gray-800 dark:text-white">
+
+  <!-- Header -->
+  <header class="bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl shadow-2xl sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-4">
+        <div class="text-5xl float">🎧</div>
+        <div>
+          <h1 class="text-3xl md:text-4xl font-bold rainbow-text">كابتن إنجليش</h1>
+          <p class="text-lg text-gray-600 dark:text-gray-300">تعلم الإنجليزية بالاستماع فقط!</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-4">
+        <!-- Audio Settings -->
+        <div class="hidden md:flex items-center gap-3 bg-blue-50 dark:bg-blue-900/30 px-4 py-2 rounded-full">
+          <label class="text-sm font-bold">⚡ السرعة:</label>
+          <input type="range" id="speedControl" min="0.5" max="1" step="0.1" value="0.8" class="w-24 accent-blue-500">
+          <span id="speedValue" class="text-sm font-bold text-blue-600 w-12">0.8x</span>
+        </div>
+        
+        <!-- Stars -->
+        <div class="bg-yellow-100 dark:bg-yellow-900/30 px-4 py-2 rounded-full flex items-center gap-2">
+          <span class="text-2xl">⭐</span>
+          <span id="starCount" class="text-xl font-bold text-yellow-700">0</span>
+        </div>
+        
+        <button onclick="toggleDark()" class="text-2xl p-3 bg-gray-100 dark:bg-slate-700 rounded-full hover:scale-110 transition">
+          🌓
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto p-4 md:p-6 space-y-8">
+
+    <!-- Hero Section with Characters -->
+    <section class="bg-white/90 dark:bg-slate-800/90 backdrop-blur rounded-3xl p-8 shadow-2xl text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-8 text-pink-600">👋 اضغط على الصور لتسمع المحادثة!</h2>
+      
+      <div class="flex flex-col md:flex-row justify-center items-end gap-8 md:gap-16">
+        <!-- Boy Character -->
+        <div class="flex-1 max-w-sm">
+          <div class="relative inline-block character-hover cursor-pointer" onclick="speakBoy()">
+            <img src="https://cdn-icons-png.flaticon.com/512/4140/4140047.png" 
+                 class="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl" 
+                 alt="أحمد">
+            <div id="boyIndicator" class="hidden absolute -top-4 -right-4 bg-blue-500 text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl animate-bounce border-4 border-white">
+              🔊
+            </div>
+          </div>
+          <div class="mt-4 bubble-left p-6 rounded-3xl text-xl md:text-2xl font-bold text-black min-h-[100px] flex items-center justify-center cursor-pointer" onclick="speakBoy()">
+            <span id="boyText">اضغط هنا!</span>
+          </div>
+          <p class="mt-2 text-gray-500 font-bold">أحمد</p>
+        </div>
+        
+        <!-- VS -->
+        <div class="text-6xl animate-pulse">💬</div>
+        
+        <!-- Girl Character -->
+        <div class="flex-1 max-w-sm">
+          <div class="relative inline-block character-hover cursor-pointer" onclick="speakGirl()">
+            <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" 
+                 class="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl" 
+                 alt="سارة">
+            <div id="girlIndicator" class="hidden absolute -top-4 -left-4 bg-pink-500 text-white rounded-full w-14 h-14 flex items-center justify-center text-2xl animate-bounce border-4 border-white">
+              🔊
+            </div>
+          </div>
+          <div class="mt-4 bubble-right p-6 rounded-3xl text-xl md:text-2xl font-bold text-black min-h-[100px] flex items-center justify-center cursor-pointer" onclick="speakGirl()">
+            <span id="girlText">اضغط هنا!</span>
+          </div>
+          <p class="mt-2 text-gray-500 font-bold">سارة</p>
+        </div>
+      </div>
+      
+      <!-- Conversation Controls -->
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <button onclick="playFullConversation()" class="audio-btn text-white px-8 py-4 rounded-full text-xl font-bold shadow-xl flex items-center gap-3">
+          <span class="text-2xl">▶️</span> شغل المحادثة كاملة
+        </button>
+        <button onclick="prevConversation()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 px-6 py-4 rounded-full text-xl font-bold transition">
+          ← سابق
+        </button>
+        <button onclick="nextConversation()" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 px-6 py-4 rounded-full text-xl font-bold transition">
+          تالي →
+        </button>
+      </div>
+      
+      <!-- Translation -->
+      <div class="mt-6 bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 p-4 rounded-2xl">
+        <p id="conversationTrans" class="text-lg font-bold">اضغط السهم للبدء في المحادثة!</p>
+      </div>
+    </section>
+
+    <!-- Vocabulary Section -->
+    <section class="bg-white/90 dark:bg-slate-800/90 backdrop-blur rounded-3xl p-6 md:p-8 shadow-2xl">
+      <div class="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+        <h2 class="text-3xl font-bold text-blue-600">📚 تعلم الكلمات - اضغط للاستماع!</h2>
+        <div class="flex gap-2">
+          <button onclick="filterWords('all')" class="px-4 py-2 rounded-full bg-blue-500 text-white font-bold hover:scale-105 transition">الكل</button>
+          <button onclick="filterWords('greetings')" class="px-4 py-2 rounded-full bg-yellow-400 text-gray-800 font-bold hover:scale-105 transition">👋 تحيات</button>
+          <button onclick="filterWords('feelings')" class="px-4 py-2 rounded-full bg-pink-400 text-white font-bold hover:scale-105 transition">❤️ مشاعر</button>
+        </div>
+      </div>
+      
+      <div id="wordsList" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"></div>
+    </section>
+
+    <!-- Listen & Repeat Section -->
+    <section class="bg-gradient-to-r from-green-400 to-blue-500 rounded-3xl p-8 shadow-2xl text-white text-center">
+      <h2 class="text-3xl font-bold mb-4">🎯 وضع التكرار والحفظ</h2>
+      <p class="text-xl mb-6">استمع للكلمة عدة مرات متتالية حتى تحفظها!</p>
+      
+      <div class="bg-white/20 backdrop-blur rounded-3xl p-8 max-w-2xl mx-auto">
+        <div id="listenWord" class="text-5xl md:text-7xl font-black mb-4 text-yellow-200">Hello</div>
+        <div id="listenAr" class="text-2xl mb-6 opacity-90">مرحبا</div>
+        
+        <div id="listenIndicator" class="hidden mb-6">
+          <div class="sound-waves">
+            <div class="wave bg-white"></div>
+            <div class="wave bg-white"></div>
+            <div class="wave bg-white"></div>
+            <div class="wave bg-white"></div>
+            <div class="wave bg-white"></div>
+          </div>
+          <p class="mt-2 font-bold">يتحدث الآن...</p>
+        </div>
+        
+        <div class="flex flex-wrap justify-center gap-4 mb-6">
+          <button onclick="repeatListen()" class="bg-white text-blue-600 px-8 py-4 rounded-full text-xl font-bold hover:scale-110 transition shadow-xl">
+            🔊 كرر الاستماع (<span id="repeatCount">3</span>)
+          </button>
+          <button onclick="prevListenWord()" class="bg-white/30 hover:bg-white/50 px-6 py-4 rounded-full text-xl font-bold transition">
+            ← السابقة
+          </button>
+          <button onclick="nextListenWord()" class="bg-white/30 hover:bg-white/50 px-6 py-4 rounded-full text-xl font-bold transition">
+            التالية →
+          </button>
+        </div>
+        
+        <div class="flex justify-center gap-4 items-center">
+          <span>عدد التكرارات:</span>
+          <button onclick="adjustRepeat(-1)" class="bg-white/30 w-10 h-10 rounded-full font-bold hover:bg-white/50">-</button>
+          <span id="repeatDisplay" class="text-2xl font-bold w-8">3</span>
+          <button onclick="adjustRepeat(1)" class="bg-white/30 w-10 h-10 rounded-full font-bold hover:bg-white/50">+</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quiz Section -->
+    <section class="bg-white/90 dark:bg-slate-800/90 backdrop-blur rounded-3xl p-8 shadow-2xl text-center">
+      <h2 class="text-3xl font-bold mb-4 text-purple-600">🎮 اختبر نفسك</h2>
+      <p class="text-lg text-gray-600 mb-6">استمع للكلمة واختر المعنى الصحيح!</p>
+      
+      <button onclick="startQuiz()" class="audio-btn text-white px-12 py-6 rounded-full text-2xl font-bold shadow-2xl hover:scale-105 transition">
+        🎯 ابدأ الاختبار
+      </button>
+    </section>
+
+  </main>
+
+  <!-- Word Detail Modal -->
+  <div id="wordModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl p-6 md:p-10 max-w-lg w-full shadow-2xl relative">
+      <button onclick="closeWordModal()" class="absolute top-4 left-4 w-12 h-12 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center text-2xl hover:scale-110 transition">✖️</button>
+      
+      <div class="text-center">
+        <img id="modalImg" src="" class="w-48 h-48 mx-auto mb-4 object-contain">
+        
+        <div id="modalIndicator" class="hidden mb-4">
+          <div class="sound-waves">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+          </div>
+        </div>
+        
+        <h3 id="modalEn" class="text-5xl font-black rainbow-text mb-2"></h3>
+        <p id="modalAr" class="text-2xl text-gray-600 dark:text-gray-300 mb-4"></p>
+        
+        <div class="bg-yellow-50 dark:bg-yellow-900/30 p-4 rounded-2xl mb-4">
+          <p class="text-lg font-bold text-gray-700 dark:text-gray-200">💡 نصيحة النطق:</p>
+          <p id="modalTip" class="text-lg"></p>
+        </div>
+        
+        <button onclick="speakModalWord()" class="audio-btn text-white w-full py-4 rounded-2xl text-xl font-bold mb-4 flex items-center justify-center gap-3">
+          <span class="text-2xl">🔊</span> استمع مرة أخرى
+        </button>
+        
+        <button onclick="markLearned()" class="w-full bg-green-500 hover:bg-green-600 text-white py-4 rounded-2xl text-xl font-bold transition">
+          ✅ خلصتها! أخذ نجمة
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quiz Modal -->
+  <div id="quizModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-800 rounded-3xl p-8 max-w-2xl w-full shadow-2xl">
+      <div class="text-center mb-8">
+        <h3 class="text-2xl font-bold mb-4">🎧 استمع جيداً واختر الإجابة:</h3>
+        
+        <button onclick="playQuizWord()" class="audio-btn text-white px-10 py-5 rounded-full text-2xl font-bold mb-4">
+          🔊 اضغط للاستماع
+        </button>
+        
+        <div id="quizIndicator" class="hidden">
+          <div class="sound-waves justify-center mb-4">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="quizOptions" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+      
+      <div id="quizResult" class="hidden text-center mt-8">
+        <div class="text-6xl mb-4" id="resultEmoji">🎉</div>
+        <p class="text-3xl font-bold mb-4" id="resultText"></p>
+        <button onclick="closeQuiz()" class="bg-green-500 text-white px-8 py-3 rounded-full text-xl font-bold">متابعة</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center text-white/80 py-8 mt-8">
+    <p class="text-xl">🌟 تعلم الإنجليزية بسهولة ومتعة!</p>
+    <p class="text-lg mt-2">اضغط على أي عنصر لتسمعه 🔊</p>
+  </footer>
+
+  <script>
+    // Data
+    const vocab = [
+      {en: "Hello", ar: "مرحبا", tip: "افتح فمك واسع وابتسم! 😊", img: "https://cdn-icons-png.flaticon.com/512/742/742751.png", cat: "greetings"},
+      {en: "Hi", ar: "أهلاً", tip: "صوت خفيف زي الضحكة 😄", img: "https://cdn-icons-png.flaticon.com/512/742/742920.png", cat: "greetings"},
+      {en: "Good morning", ar: "صباح الخير", tip: "نطق بطيء وفرحان ☀️", img: "https://cdn-icons-png.flaticon.com/512/869/869869.png", cat: "greetings"},
+      {en: "Goodbye", ar: "مع السلامة", tip: "وداع حنون بإيد ماشية 👋", img: "https://cdn-icons-png.flaticon.com/512/742/742922.png", cat: "greetings"},
+      {en: "How are you?", ar: "إزيك؟", tip: "فم مفتوح واسع 😮", img: "https://cdn-icons-png.flaticon.com/512/742/742774.png", cat: "greetings"},
+      {en: "I'm fine", ar: "أنا كويس", tip: "صوت ناعم وواثق 😌", img: "https://cdn-icons-png.flaticon.com/512/742/742860.png", cat: "feelings"},
+      {en: "I'm happy", ar: "أنا مبسوط", tip: "ابتسامة كبيرة 😃", img: "https://cdn-icons-png.flaticon.com/512/742/742751.png", cat: "feelings"},
+      {en: "I'm sad", ar: "أنا زعلان", tip: "صوت هادئ شوية 😢", img: "https://cdn-icons-png.flaticon.com/512/742/742752.png", cat: "feelings"},
+      {en: "Thank you", ar: "شكراً", tip: "لسان فوق الشفايف 😊", img: "https://cdn-icons-png.flaticon.com/512/742/742921.png", cat: "greetings"},
+      {en: "Please", ar: "من فضلك", tip: "صوت لطيف 🥺", img: "https://cdn-icons-png.flaticon.com/512/742/742861.png", cat: "greetings"},
+      {en: "My name is", ar: "اسمي...", tip: "شفايف مفتوحة 😊", img: "https://cdn-icons-png.flaticon.com/512/4140/4140047.png", cat: "greetings"},
+      {en: "I'm hungry", ar: "أنا جعان", tip: "بطنك بتدق 🍔", img: "https://cdn-icons-png.flaticon.com/512/742/742865.png", cat: "feelings"},
+      {en: "I'm tired", ar: "أنا تعبان", tip: "عيون نص مغمضة 😴", img: "https://cdn-icons-png.flaticon.com/512/742/742869.png", cat: "feelings"},
+      {en: "Yes", ar: "نعم", tip: "راس بالأفق 📌", img: "https://cdn-icons-png.flaticon.com/512/742/742867.png", cat: "greetings"},
+      {en: "No", ar: "لا", tip: "راس بالرأس 🚫", img: "https://cdn-icons-png.flaticon.com/512/742/742868.png", cat: "greetings"},
+      {en: "I'm excited", ar: "أنا متحمس", tip: "قفز وفرح 🎉", img: "https://cdn-icons-png.flaticon.com/512/742/742871.png", cat: "feelings"}
+    ];
+
+    const conversations = [
+      {boy: "Hello! I'm Ahmed.", girl: "Hi Ahmed! I'm Sara. Nice to meet you!", trans: "أحمد: مرحباً! أنا أحمد. | سارة: أهلاً أحمد! أنا سارة. فرصة سعيدة!"},
+      {boy: "Good morning Sara!", girl: "Good morning! How are you today?", trans: "أحمد: صباح الخير سارة! | سارة: صباح الخير! إزيك النهاردة؟"},
+      {boy: "I'm fine, thank you!", girl: "Great! I'm happy to see you!", trans: "أحمد: أنا كويس، شكراً! | سارة: رائع! أنا مبسوطة أشوفك!"},
+      {boy: "My name is Ahmed. What's your name?", girl: "My name is Sara. Nice to meet you!", trans: "أحمد: اسمي أحمد. واسمك إنتي؟ | سارة: اسمي سارة. فرصة سعيدة!"},
+      {boy: "Goodbye Sara!", girl: "Goodbye Ahmed! See you tomorrow!", trans: "أحمد: مع السلامة سارة! | سارة: مع السلامة أحمد! أشوفك بكرة!"},
+      {boy: "How are you?", girl: "I'm fine, thank you! And you?", trans: "أحمد: إزيك؟ | سارة: أنا كويسة، شكراً! وأنت؟"},
+      {boy: "I'm happy!", girl: "Me too! I'm very happy!", trans: "أحمد: أنا مبسوط! | سارة: وأنا كمان! أنا مبسوطة جداً!"},
+      {boy: "Thank you!", girl: "You're welcome!", trans: "أحمد: شكراً! | سارة: على الرحب والسعة!"}
+    ];
+
+    let currentConvo = 0;
+    let listenIndex = 0;
+    let repeatTimes = 3;
+    let stars = 0;
+    let currentFilter = 'all';
+    let modalWord = null;
+    let quizWord = null;
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      renderWords();
+      updateConversation();
+      
+      // Speed control
+      document.getElementById('speedControl').addEventListener('input', (e) => {
+        document.getElementById('speedValue').textContent = e.target.value + 'x';
+      });
+    });
+
+    function toggleDark() {
+      document.documentElement.classList.toggle('dark');
+    }
+
+    function getSpeed() {
+      return parseFloat(document.getElementById('speedControl').value);
+    }
+
+    function speak(text, onEnd) {
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'en-US';
+      u.rate = getSpeed();
+      u.pitch = 1.1;
+      if(onEnd) u.onend = onEnd;
+      window.speechSynthesis.speak(u);
+      return u;
+    }
+
+    // Conversations
+    function updateConversation() {
+      const c = conversations[currentConvo];
+      document.getElementById('boyText').textContent = "🔊 " + c.boy;
+      document.getElementById('girlText').textContent = "🔊 " + c.girl;
+      document.getElementById('conversationTrans').textContent = c.trans;
+    }
+
+    function speakBoy() {
+      const c = conversations[currentConvo];
+      document.getElementById('boyIndicator').classList.remove('hidden');
+      speak(c.boy, () => {
+        document.getElementById('boyIndicator').classList.add('hidden');
+      });
+    }
+
+    function speakGirl() {
+      const c = conversations[currentConvo];
+      document.getElementById('girlIndicator').classList.remove('hidden');
+      speak(c.girl, () => {
+        document.getElementById('girlIndicator').classList.add('hidden');
+      });
+    }
+
+    function playFullConversation() {
+      speakBoy();
+      setTimeout(() => speakGirl(), 1500);
+    }
+
+    function nextConversation() {
+      currentConvo = (currentConvo + 1) % conversations.length;
+      updateConversation();
+    }
+
+    function prevConversation() {
+      currentConvo = (currentConvo - 1 + conversations.length) % conversations.length;
+      updateConversation();
+    }
+
+    // Vocabulary
+    function filterWords(cat) {
+      currentFilter = cat;
+      renderWords();
+    }
+
+    function renderWords() {
+      const list = document.getElementById('wordsList');
+      const filtered = currentFilter === 'all' ? vocab : vocab.filter(w => w.cat === currentFilter);
+      
+      list.innerHTML = '';
+      filtered.forEach((w, i) => {
+        const card = document.createElement('div');
+        card.className = 'word-card bg-white dark:bg-slate-700 rounded-2xl p-4 shadow-xl border-4 border-transparent text-center';
+        card.onclick = () => openWordModal(w);
+        
+        card.innerHTML = `
+          <img src="${w.img}" class="w-24 h-24 mx-auto mb-3 object-contain">
+          <h3 class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-500 mb-1">${w.en}</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm">${w.ar}</p>
+          <div class="mt-2 text-2xl">🔊</div>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function openWordModal(w) {
+      modalWord = w;
+      document.getElementById('modalImg').src = w.img;
+      document.getElementById('modalEn').textContent = w.en;
+      document.getElementById('modalAr').textContent = w.ar;
+      document.getElementById('modalTip').textContent = w.tip;
+      document.getElementById('wordModal').classList.remove('hidden');
+      speakModalWord();
+    }
+
+    function closeWordModal() {
+      document.getElementById('wordModal').classList.add('hidden');
+      document.getElementById('modalIndicator').classList.add('hidden');
+    }
+
+    function speakModalWord() {
+      document.getElementById('modalIndicator').classList.remove('hidden');
+      speak(modalWord.en, () => {
+        document.getElementById('modalIndicator').classList.add('hidden');
+      });
+    }
+
+    function markLearned() {
+      stars++;
+      document.getElementById('starCount').textContent = stars;
+      launchConfetti();
+      closeWordModal();
+    }
+
+    // Listen & Repeat
+    function updateListenWord() {
+      const w = vocab[listenIndex];
+      document.getElementById('listenWord').textContent = w.en;
+      document.getElementById('listenAr').textContent = w.ar;
+    }
+
+    function repeatListen() {
+      const w = vocab[listenIndex];
+      let count = 0;
+      
+      function speakOnce() {
+        if(count < repeatTimes) {
+          document.getElementById('listenIndicator').classList.remove('hidden');
+          speak(w.en, () => {
+            count++;
+            document.getElementById('listenIndicator').classList.add('hidden');
+            if(count < repeatTimes) setTimeout(speakOnce, 800);
+          });
+        }
+      }
+      
+      speakOnce();
+    }
+
+    function adjustRepeat(delta) {
+      repeatTimes = Math.max(1, Math.min(5, repeatTimes + delta));
+      document.getElementById('repeatCount').textContent = repeatTimes;
+      document.getElementById('repeatDisplay').textContent = repeatTimes;
+    }
+
+    function nextListenWord() {
+      listenIndex = (listenIndex + 1) % vocab.length;
+      updateListenWord();
+      setTimeout(repeatListen, 300);
+    }
+
+    function prevListenWord() {
+      listenIndex = (listenIndex - 1 + vocab.length) % vocab.length;
+      updateListenWord();
+      setTimeout(repeatListen, 300);
+    }
+
+    // Quiz
+    function startQuiz() {
+      document.getElementById('quizModal').classList.remove('hidden');
+      document.getElementById('quizResult').classList.add('hidden');
+      document.getElementById('quizOptions').innerHTML = '';
+      nextQuizQuestion();
+    }
+
+    function nextQuizQuestion() {
+      quizWord = vocab[Math.floor(Math.random() * vocab.length)];
+      const options = [quizWord];
+      
+      while(options.length < 4) {
+        const r = vocab[Math.floor(Math.random() * vocab.length)];
+        if(!options.find(o => o.en === r.en)) options.push(r);
+      }
+      
+      options.sort(() => Math.random() - 0.5);
+      
+      const container = document.getElementById('quizOptions');
+      container.innerHTML = '';
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'bg-gradient-to-r from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 text-white py-6 rounded-2xl text-xl font-bold shadow-lg transition transform hover:scale-105';
+        btn.textContent = opt.ar;
+        btn.onclick = () => checkAnswer(opt);
+        container.appendChild(btn);
+      });
+    }
+
+    function playQuizWord() {
+      document.getElementById('quizIndicator').classList.remove('hidden');
+      speak(quizWord.en, () => {
+        document.getElementById('quizIndicator').classList.add('hidden');
+      });
+    }
+
+    function checkAnswer(selected) {
+      const correct = selected.en === quizWord.en;
+      document.getElementById('quizOptions').innerHTML = '';
+      document.getElementById('quizResult').classList.remove('hidden');
+      
+      if(correct) {
+        document.getElementById('resultEmoji').textContent = '🎉';
+        document.getElementById('resultText').textContent = 'أحسنت! إجابة صحيحة!';
+        stars++;
+        document.getElementById('starCount').textContent = stars;
+        speak("Correct! Well done!");
+        launchConfetti();
+      } else {
+        document.getElementById('resultEmoji').textContent = '💪';
+        document.getElementById('resultText').textContent = 'حاول مرة أخرى! الصح: ' + quizWord.ar;
+        speak("Try again!");
+      }
+    }
+
+    function closeQuiz() {
+      document.getElementById('quizModal').classList.add('hidden');
+    }
+
+    // Confetti
+    function launchConfetti() {
+      const colors = ['#ff0080', '#00ff80', '#0080ff', '#ffff00', '#ff8000'];
+      for(let i = 0; i < 50; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        document.body.appendChild(c);
+        
+        c.animate([
+          {transform: 'translateY(0) rotate(0deg)', opacity: 1},
+          {transform: `translateY(100vh) rotate(${Math.random() * 720}deg)`, opacity: 0}
+        ], {
+          duration: 3000 + Math.random() * 2000,
+          easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        }).onfinish = () => c.remove();
+      }
+    }
+
+    // Init
+    updateListenWord();
+  </script>
+</body>
+</html>
